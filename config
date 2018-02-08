@@ -32,6 +32,7 @@ floating_modifier $mod
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec urxvt
+#bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -234,5 +235,20 @@ exec_always xset led on
 exec firefox
 exec thunderbird
 exec_always compton -f
+
+#shortcut for screenshot
+
+bindsym $mod+shift+s exec xfce4-screenshooter
+
+#changing the keyboard
+
+exec setxkbmap us
+
+exec_always "setxkbmap -model pc104 -layout us,rs,hr -variant ,, -option grp:ctrl_shift_toggle"
+
+#not work
+#exec setxkbmap -option grp:switch -option grp:ctrl_shift_toggle -option grp_led:scroll us,rs,hr
+#exec "setxkbmap -layout us,rs,hr"
+#exec "setxkbmap -option 'grp:ctrl_shift_toggle'"
 
 
