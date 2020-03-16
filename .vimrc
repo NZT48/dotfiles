@@ -1,77 +1,86 @@
-" VIM Configuration File
-" Description: Optimized for C/C++ development, but useful also for other things.
-" Author: Gerhard Gappmeier
-"
+" Vim Config file
+" Author: Nikola Todorovic (NZT)
 
-" set UTF-8 encoding
-set enc=utf-8
-set fenc=utf-8
-set termencoding=utf-8
-" disable vi compatibility (emulation of old bugs)
-set nocompatible
-" use indentation of previous line
-set autoindent
-" use intelligent indentation for C
-set smartindent
-" configure tabwidth and insert spaces instead of tabs
-set tabstop=4        " tab width is 4 spaces
-set shiftwidth=4     " indent also with 4 spaces
-set expandtab        " expand tabs to spaces
-" wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
-set textwidth=120
-" turn syntax highlighting on
-set t_Co=256
-syntax on
-" colorscheme wombat256
-" turn line numbers on
+" =======> General <=======
+
+" Sets how many lines of history VIM has to rembember
+set history=500
+" Always show current position
+set ruler
+" Show line numbers
 set number
-" highlight matching braces
+" Helps force plug-ins to load correctly when
+" it is turned back on below
+" filetype off
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+" Speed up scrolling in Vim
+set ttyfast
+
+" =======> Matching brackets <
+
+" Show matching brackets
 set showmatch
-" intelligent comments
-set comments=sl:/*,mb:\ *,elx:\ */
+" Hoiw meny tenths of a second to blink when matching brackets
+set mat=2
+" Enable mouse usage (all modes)
+set mouse=a
 
-" Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
-" This offers intelligent C++ completion when typing ‘.’ ‘->’ or <C-o>
-" Load standard tag files
-set tags+=~/.vim/tags/cpp
-set tags+=~/.vim/tags/gl
-set tags+=~/.vim/tags/sdl
-set tags+=~/.vim/tags/qt4
+" =======> Searching part <=======
 
-" Install DoxygenToolkit from http://www.vim.org/scripts/script.php?script_id=987
-let g:DoxygenToolkit_authorName="John Doe <john@doe.com>"
+" Incremental search
+set incsearch
+" Show (partial) command in status line
+set showcmd
+" Do smart case matching
+set smartcase
+" Do case insensitive matching
+set ignorecase
+" Highlight searc results
+set hlsearch
 
-" Enhanced keyboard mappings
-"
-" in normal mode F2 will save the file
-nmap <F2> :w<CR>
-" in insert mode F2 will exit insert, save, enters insert again
-imap <F2> <ESC>:w<CR>i
-" switch between header/source with F4
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-" recreate tags file with F5
-map <F5> :!ctags -R –c++-kinds=+p –fields=+iaS –extra=+q .<CR>
-" create doxygen comment
-map <F6> :Dox<CR>
-" build using makeprg with <F7>
-map <F7> :make<CR>
-" build using makeprg with <S-F7>
-map <S-F7> :make clean all<CR>
-" goto definition with F12
-map <F12> <C-]>
-" in diff mode we use the spell check keys for merging
-if &diff
-  ” diff settings
-  map <M-Down> ]c
-  map <M-Up> [c
-  map <M-Left> do
-  map <M-Right> dp
-  map <F9> :new<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>gg
-else
-  " spell settings
-  :setlocal spell spelllang=en
-  " set the spellfile - folders must exist
-  set spellfile=~/.vim/spellfile.add
-  map <M-Down> ]s
-  map <M-Up> [s
+" =======> Colors and Fonts <=======
+
+" Turn on syntax highlighting
+syntax on
+" Setting background
+set background=dark
+" Encoding
+set encoding=utf-8
+
+" =======> Text, tab and indent related <=======
+
+"Use spaces instead of tabs
+"set expandtab
+"Be smart when using tabs
+set smarttab
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+
+" =======> Status line <=======
+
+" Always show the status line
+"set laststatus=2
+" Set status line display
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+"%F%m%r\ [Format=%{&ff}]\ [Type=%Y]\ [Pos=%l,%v][%p%%]
+" Activating airline plugin 
+let g:airline_theme='solarized'
+
+" =======> Plugins <=======
+
+if filereadable(expand("~/.vimrc.plug"))
+	source ~/.vimrc.plug
 endif
+
+" =======> Helper funcs <=======
+
+" Returns ture if paste mode is enabled
+function! HasPaste()
+	if &paste
+		return 'PASTE MODE'
+	endif
+	return ''
+endfunction

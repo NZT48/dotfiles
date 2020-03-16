@@ -4,7 +4,7 @@ while getopts d: opt; do
     case $opt in
         d) dir=$OPTARG;;
         *) echo "Error: I need dir where are Java files."
-            echo "Usage: skriptjava.sh -d ../../dir_java"
+            echo "Usage: merge_java_files.sh -d ../../dir_java"
             exit -1;;
     esac
 done
